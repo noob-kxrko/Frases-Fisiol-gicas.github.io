@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1220" />
+    <title>Filosofía — Frases por temas</title>
+    <meta name="description" content="Una biblioteca cuidada de frases filosóficas por temas, con autores y contexto." />
+    <meta name="robots" content="index,follow" />
+
+    <meta property="og:title" content="Filosofía — Frases por temas" />
+    <meta property="og:description" content="Frases filosóficas por temas, con autores y contexto." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./assets/og.svg" />
+
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = saved || (prefersDark ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand" aria-label="Marca">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <div>
+            <div class="brand-title">Filosofía</div>
+            <div class="brand-subtitle">Frases por temas · Autores · Contexto</div>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="Navegación principal">
+          <a href="#inicio" class="nav-link">Inicio</a>
+          <a href="#temas" class="nav-link">Temas</a>
+          <a href="#frases" class="nav-link">Frases</a>
+          <a href="#autores" class="nav-link">Autores</a>
+          <a href="#contacto" class="nav-link">Contacto</a>
+        </nav>
+
+        <div class="header-actions">
+          <div class="theme-selector">
+            <select id="customThemeSelect">
+              <option value="">Tema personalizado</option>
+              <option value="midnight">Medianoche</option>
+              <option value="ocean">Océano</option>
+              <option value="forest">Bosque</option>
+              <option value="sunset">Atardecer</option>
+              <option value="lavender">Lavanda</option>
+              <option value="monochrome">Monocromo</option>
+            </select>
+          </div>
+          <button id="themeToggle" class="btn btn-ghost" type="button" aria-label="Cambiar tema">
+            <span class="btn-icon" aria-hidden="true">🌓</span>
+            <span class="btn-text">Tema</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="contenido">
+      <section id="inicio" class="hero">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <h1>Una colección cuidada de ideas que atraviesan siglos</h1>
+            <p class="hero-lede">
+              Explora frases filosóficas por temas, descubre autores y conecta conceptos. Diseñado para lectura cómoda,
+              búsqueda rápida y navegación por contexto.
+            </p>
+
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="#frases">Explorar frases</a>
+              <a class="btn btn-secondary" href="#temas">Ver temas</a>
+            </div>
+
+            <div class="hero-stats" id="heroStats" aria-label="Estadísticas"></div>
+          </div>
+
+          <div class="hero-panel" aria-label="Panel destacado">
+            <div class="panel-header">
+              <div class="panel-title">Sugerencia del día</div>
+              <button id="shuffleFeatured" class="btn btn-ghost" type="button" aria-label="Cambiar sugerencia">
+                <span class="btn-icon" aria-hidden="true">⟳</span>
+                <span class="btn-text">Cambiar</span>
+              </button>
+            </div>
+            <div id="featuredCard" class="featured"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="temas" class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2>Temas</h2>
+            <p class="muted">Filtra por un tema para encontrar frases y autores relacionados.</p>
+          </div>
+
+          <div class="topics-toolbar" aria-label="Buscar temas">
+            <label class="control" aria-label="Buscar tema">
+              <span class="control-label">Buscar tema</span>
+              <input id="topicSearchInput" type="search" placeholder="Ej.: ontología, estética, política…" autocomplete="off" />
+            </label>
+
+            <button id="clearTopicSearch" class="btn btn-secondary" type="button">Limpiar</button>
+          </div>
+
+          <div id="topicsGrid" class="topics-grid" aria-label="Lista de temas"></div>
+        </div>
+      </section>
+
+      <section id="frases" class="section">
+        <div class="container">
+          <div class="section-header section-header-row">
+            <div>
+              <h2>Frases</h2>
+              <p class="muted">Busca, filtra por tema o autor y guarda el enlace con tu selección.</p>
+            </div>
+
+            <div class="controls" aria-label="Controles">
+              <label class="control" aria-label="Buscar">
+                <span class="control-label">Buscar</span>
+                <input id="searchInput" type="search" placeholder="Ej.: libertad, verdad, ética…" autocomplete="off" />
+              </label>
+
+              <label class="control" aria-label="Orden">
+                <span class="control-label">Orden</span>
+                <select id="sortSelect">
+                  <option value="relevance">Relevancia</option>
+                  <option value="author">Autor</option>
+                  <option value="topic">Tema</option>
+                  <option value="random">Aleatorio</option>
+                </select>
+              </label>
+
+              <button id="clearFilters" class="btn btn-secondary" type="button">Limpiar filtros</button>
+            </div>
+          </div>
+
+          <div class="active-filters" id="activeFilters" aria-live="polite"></div>
+
+          <div class="grid">
+            <aside class="sidebar" aria-label="Filtros">
+              <div class="card">
+                <div class="card-title">Tema activo</div>
+                <div id="activeTopic" class="pill muted">Ninguno</div>
+                <div class="card-divider"></div>
+
+                <div class="card-title">Autor activo</div>
+                <div id="activeAuthor" class="pill muted">Ninguno</div>
+                <div class="card-divider"></div>
+
+                <div class="card-title">Consejo</div>
+                <div class="muted small">Haz clic en un tema o en un autor para filtrar. Abre un autor para ver su contexto.</div>
+              </div>
+            </aside>
+
+            <div>
+              <div id="quotesMeta" class="quotes-meta" aria-live="polite"></div>
+              <div id="quotesGrid" class="quotes-grid" aria-label="Lista de frases"></div>
+              <div class="quotes-more">
+                <button id="loadMoreQuotes" class="btn btn-secondary" type="button" hidden>Cargar más</button>
+              </div>
+              <div id="emptyState" class="empty" hidden>
+                <div class="empty-title">No hay resultados</div>
+                <div class="muted">Prueba con otra búsqueda o elimina algún filtro.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="autores" class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2>Autores</h2>
+            <p class="muted">Explora filósofos y pensadores. Cada perfil incluye fotografía y frases asociadas.</p>
+          </div>
+
+          <div id="authorsGrid" class="authors-grid" aria-label="Lista de autores"></div>
+        </div>
+      </section>
+
+      <section id="contacto" class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2>Contacto</h2>
+            <p class="muted">Si quieres que carguemos más autores/temas o integrar un panel de administración, dímelo.</p>
+          </div>
+
+          <div class="contact card">
+            <div>
+              <div class="card-title">Sugerencias</div>
+              <div class="muted">Este sitio es estático (sin servidor). Puedes usar este botón para abrir tu correo.</div>
+            </div>
+            <div class="contact-actions">
+              <a class="btn btn-primary" href="https://mail.google.com/mail/?view=cm&to=jhonmaix23@gmail.com&su=Filosof%C3%ADa%20-%20Sugerencia" target="_blank">Enviar email</a>
+              <button id="copyLink" class="btn btn-secondary" type="button">Copiar enlace con filtros</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="container footer-inner">
+          <div class="muted">© <span id="year"></span> Filosofía. Hecho para lectura y estudio.</div>
+          <div class="muted small">Imágenes: Wikimedia Commons. Frases: uso educativo.</div>
+        </div>
+      </footer>
+    </main>
+
+    <dialog id="authorDialog" class="dialog" aria-label="Detalle de autor">
+      <form method="dialog" class="dialog-inner">
+        <button class="dialog-close" aria-label="Cerrar">×</button>
+        <div id="authorDialogBody"></div>
+      </form>
+    </dialog>
+
+    <script type="module" src="app.js"></script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Filosofía — Frases por temas",
+        "description": "Una biblioteca cuidada de frases filosóficas por temas, con autores y contexto.",
+        "inLanguage": "es"
+      }
+    </script>
+  </body>
+</html>
